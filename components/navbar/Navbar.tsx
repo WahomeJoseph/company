@@ -5,10 +5,10 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, ChevronDown } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-
+import { useRouter } from "next/navigation"
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-
+ const  navigate= useRouter()
   const toggleMenu = () => setIsOpen(!isOpen)
 
   const services = [
@@ -58,6 +58,10 @@ export default function Navbar() {
             <Link href="/portfolio" className="text-gray-600 hover:text-emerald-600 transition-colors font-medium">
               Portfolio
             </Link>
+ <Link href="/pricing" className="text-gray-600 hover:text-emerald-600 transition-colors font-medium">
+              Pricing
+            </Link>
+
             <Link href="/blog" className="text-gray-600 hover:text-emerald-600 transition-colors font-medium">
               Blog
             </Link>
@@ -68,9 +72,9 @@ export default function Navbar() {
               Contact
             </Link>
 
-            <Button asChild className="ml-4 bg-emerald-600 hover:bg-emerald-700 text-white">
-              <Link href="/get-quote">Get Quote</Link>
-            </Button>
+           <Button asChild className="ml-4 bg-emerald-600 hover:bg-emerald-700 text-white">
+  <Link href="/quote">Get Quote</Link>
+</Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -116,6 +120,13 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
               >
                 Portfolio
+              </Link>
+               <Link
+                href="/pricing"
+                className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Pricing
               </Link>
               <Link
                 href="/blog"
