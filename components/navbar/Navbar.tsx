@@ -1,155 +1,269 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronDown } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { JSX, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Menu,
+  X,
+  Code,
+  ChevronDown,
+  Globe,
+  Smartphone,
+  Cloud,
+  Shield,
+  Network,
+  Brain,
+  MessageSquare,
+} from 'lucide-react';
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+interface NavItem {
+  name: string;
+  href: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
 
-  const toggleMenu = () => setIsOpen(!isOpen)
+interface Service {
+  name: string;
+  href: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
 
-  const services = [
-    { name: "Web Development", href: "/services/web-development" },
-    { name: "Mobile Apps", href: "/services/mobile-apps" },
-    { name: "Cloud Solutions", href: "/services/cloud-solutions" },
-    { name: "Network Infrastructure", href: "/services/network-infrastructure" },
-    { name: "Cybersecurity", href: "/services/cybersecurity" },
-    { name: "AI & Machine Learning", href: "/services/ai-ml" },
-  ]
+const navItems = [
+  { name: 'About', href: '/about' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'Blogs', href: '/blogs' },
+  { name: 'Careers', href: '/careers' },
+  { name: 'Pricing', href: '/pricing' },
+  { name: 'Contact', href: '/contact' },
+]
+
+const services: Service[] = [
+  { name: 'Web Development', href: '/services/web-development', icon: Globe },
+  { name: 'Mobile Apps', href: '/services/mobile-apps', icon: Smartphone },
+  { name: 'Cloud Solutions', href: '/services/cloud-solutions', icon: Cloud },
+  { name: 'Network Infrastructure', href: '/services/network-infrastructure', icon: Network },
+  { name: 'Cybersecurity', href: '/services/cybersecurity', icon: Shield },
+  { name: 'AI & Machine Learning', href: '/services/ai-ml', icon: Brain },
+];
+
+const Navbar = (): JSX.Element => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const pathname = usePathname();  // Use usePathname for the current path
+
+  const isActive = (href: string): boolean => {
+    if (href === '/services') {
+      return pathname === href || pathname.startsWith('/services/');
+    }
+    return pathname === href;
+  };
+
+  // Check if a service is active
+  const isServiceActive = (serviceHref: string): boolean => {
+    return pathname === serviceHref;
+  };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur shadow-sm">
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">T</span>
-            </div>
-            <span className="text-xl font-bold text-gray-900">TechSolutions</span>
-          </Link>
+    <nav className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur text-emerald-600 shadow-sm">
+      <div className="container flex h-20 items-center text-emerald-600 justify-between">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="group flex items-center ml-14 space-x-3 transition-transform hover:scale-105"
+        >
+          <span className="text-xl font-bold text-emerald-700 transition-colors group-hover:text-primary">
+            🅓🅘🅖🅘🅣🅐🅛 🅕🅘🅧🅔🅡🅢
+          </span>
+        </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/about" className="text-gray-600 hover:text-emerald-600 transition-colors font-medium">
-              About
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex lg:items-center lg:space-x-1.5">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`group relative flex items-center space-x-2 rounded-lg px-4 py-2 text-md font-medium transition-all duration-200 hover:bg-blue/50 ${isActive(item.href)
+                  ? 'text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg'
+                  : 'text-gray-600 hover:text-emerald-600'
+                }`}
+            >
+              <span>{item.name}</span>
+              <span
+                className={`absolute -bottom-1 left-0 h-0.5 bg-emerald-600 transition-all ${isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+              ></span>
             </Link>
+          ))}
 
-            {/* Services Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-600 hover:text-emerald-600 transition-colors font-medium">
+          {/* Services Dropdown */}
+          <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+            <DropdownMenuTrigger asChild>
+              <button
+                className={`group relative flex items-center space-x-2 rounded-lg px-4 py-2 text-md font-medium transition-all duration-200 hover:bg-accent/50 ${isActive('/services')
+                    ? 'text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg'
+                    : 'text-gray-600 hover:text-emerald-600'
+                  }`}
+              >
                 <span>Services</span>
-                <ChevronDown className="h-4 w-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56">
-                {services.map((service) => (
-                  <DropdownMenuItem key={service.href} asChild>
-                    <Link href={service.href} className="w-full hover:text-emerald-600">
-                      {service.name}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <span
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-emerald-600 transition-all ${isActive('/services') ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                ></span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-64 p-2 bg-white animate-in slide-in-from-top-2 shadow-lg border border-gray-200 rounded-lg">
+              {services.map((service) => (
+                <DropdownMenuItem key={service.href} asChild>
+                  <Link
+                    href={service.href}
+                    className={`group flex items-center space-x-3 cursor-pointer rounded-md px-3 py-3 transition-all ${
+                      isServiceActive(service.href)
+                        ? 'bg-emerald-50 text-emerald-700 font-semibold border-l-2 border-emerald-600'
+                        : 'hover:bg-emerald-600/10 text-emerald-600'
+                    }`}
+                  >
+                    <service.icon className={`h-4 w-4 transition-transform group-hover:scale-110 ${
+                      isServiceActive(service.href) ? 'text-emerald-600' : 'text-emerald-800'
+                    }`} />
+                    <span className="font-medium">{service.name}</span>
+                    {isServiceActive(service.href) && (
+                      <span className="ml-auto h-2 w-2 rounded-full bg-emerald-500"></span>
+                    )}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+              <div className="mx-3 my-2 border-t" />
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/services"
+                  className={`flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive('/services')
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                  }`}
+                >
+                  View All Services
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-            <Link href="/portfolio" className="text-gray-600 hover:text-emerald-600 transition-colors font-medium">
-              Portfolio
+          <Button variant="default" size="lg" asChild className="ml-4 shadow-lg bg-emerald-600 text-white hover:shadow-xl transition-all">
+            <Link href="/contact" className="flex items-center space-x-2">
+              <MessageSquare className="h-4 w-4" />
+              <span>Get Quote</span>
             </Link>
-            <Link href="/blog" className="text-gray-600 hover:text-emerald-600 transition-colors font-medium">
-              Blog
-            </Link>
-            <Link href="/careers" className="text-gray-600 hover:text-emerald-600 transition-colors font-medium">
-              Careers
-            </Link>
-            <Link href="/contact" className="text-gray-600 hover:text-emerald-600 transition-colors font-medium">
-              Contact
-            </Link>
-
-            <Button asChild className="ml-4 bg-emerald-600 hover:bg-emerald-700 text-white">
-              <Link href="/get-quote">Get Quote</Link>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <Button onClick={toggleMenu} aria-label="Toggle menu" aria-expanded={isOpen}>
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
-          </div>
+          </Button>
         </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden border-t bg-white">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+        {/* Mobile Navigation */}
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild className="lg:hidden">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="relative overflow-hidden transition-all hover:bg-accent/50"
+            >
+              <div className={`transition-all duration-300 ${isOpen ? 'rotate-90 opacity-0' : 'rotate-0 opacity-100'}`}>
+                <Menu className="h-5 w-5" />
+              </div>
+              <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-0 opacity-100' : '-rotate-90 opacity-0'}`}>
+                <X className="h-5 w-5" />
+              </div>
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[320px] animate-in slide-in-from-right-full">
+            <div className="flex flex-col space-y-6 pt-6">
+              {/* Mobile Logo */}
               <Link
-                href="/about"
-                className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
+                href="/"
+                className="flex items-center space-x-3"
                 onClick={() => setIsOpen(false)}
               >
-                About
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-primary shadow-lg">
+                  <Code className="h-5 w-5 text-primary-foreground" />
+                </div>
+                <span className="text-xl font-bold">Digital Fixers</span>
               </Link>
 
-              {/* Mobile Services */}
-              <div className="px-3 py-2">
-                <div className="text-base font-medium text-gray-900 mb-2">Services</div>
-                <div className="pl-4 space-y-1">
-                  {services.map((service) => (
+              {/* Mobile Navigation Items */}
+              <div className="flex flex-col space-y-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center space-x-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${isActive(item.href)
+                        ? 'bg-accent text-primary'
+                        : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                      }`}
+                  >
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+
+                {/* Mobile Services */}
+                <div className="space-y-1">
+                  <Link
+                    href="/services"
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center space-x-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${isActive('/services')
+                        ? 'bg-accent text-primary'
+                        : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                      }`}
+                  >
+                    <Network className="h-4 w-4" />
+                    <span>Services</span>
+                  </Link>
+
+                  <div className="ml-4 space-y-1 border-l-2 border-border pl-4">
+                    {services.map((service) => (
+                      <Link
+                        key={service.href}
+                        href={service.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex items-center space-x-3 rounded-lg px-3 py-2 text-xs font-medium transition-all ${
+                          isServiceActive(service.href)
+                            ? 'bg-emerald-50 text-emerald-700 font-semibold'
+                            : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                        }`}
+                      >
+                        <service.icon className="h-3 w-3" />
+                        <span>{service.name}</span>
+                        {isServiceActive(service.href) && (
+                          <span className="ml-auto h-2 w-2 rounded-full bg-emerald-500"></span>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t">
+                  <Button variant="default" size="sm" asChild className="w-full shadow-lg">
                     <Link
-                      key={service.href}
-                      href={service.href}
-                      className="block py-1 text-sm text-gray-600 hover:text-emerald-600 transition-colors"
+                      href="/contact"
                       onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center space-x-2"
                     >
-                      {service.name}
+                      <MessageSquare className="h-4 w-4" />
+                      <span>Get Quote</span>
                     </Link>
-                  ))}
+                  </Button>
                 </div>
               </div>
-
-              <Link
-                href="/portfolio"
-                className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Portfolio
-              </Link>
-              <Link
-                href="/blog"
-                className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Blog
-              </Link>
-              <Link
-                href="/careers"
-                className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Careers
-              </Link>
-              <Link
-                href="/contact"
-                className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Contact
-              </Link>
-
-              <div className="px-3 pt-2">
-                <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
-                  <Link href="/get-quote" onClick={() => setIsOpen(false)}>
-                    Get Quote
-                  </Link>
-                </Button>
-              </div>
             </div>
-          </div>
-        )}
-      </nav>
-    </header>
-  )
-}
+          </SheetContent>
+        </Sheet>
+
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

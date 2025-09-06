@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import React, { forwardRef } from "react"
-import { cn } from "../../lib/utils.js"
+import { cn } from "@/lib/utils"
 // Define props with built-in input attributes
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
