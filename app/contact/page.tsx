@@ -1,12 +1,30 @@
 "use client";
-
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle,MessageCircle } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  CheckCircle,
+  MessageCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { motion } from "framer-motion";
 
 const contactInfo = [
@@ -14,20 +32,20 @@ const contactInfo = [
     icon: <Mail className="h-6 w-6" />,
     title: "Email Us",
     content: "info@techsolutions.com",
-    description: "Send us an email and we'll respond within 24 hours"
+    description: "Send us an email and we'll respond within 24 hours",
   },
   {
     icon: <Phone className="h-6 w-6" />,
     title: "Call Us",
-    content: "+1 (555) 123-4567",
-    description: "Monday to Friday from 8am to 5pm EST"
+    content: "+254 700 000000",
+    description: "Monday to Friday from 8am to 5pm EAT",
   },
   {
     icon: <MapPin className="h-6 w-6" />,
     title: "Visit Us",
     content: "Nairobi, Kenya",
-    description: "Come visit our office for a face-to-face consultation"
-  }
+    description: "Come visit our office for a face-to-face consultation",
+  },
 ];
 
 export default function Contact() {
@@ -37,16 +55,14 @@ export default function Contact() {
     company: "",
     service: "",
     budget: "",
-    message: ""
+    message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
     console.log("Form submitted:", formData);
     setIsSubmitted(true);
-    // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
       setFormData({
@@ -55,42 +71,70 @@ export default function Contact() {
         company: "",
         service: "",
         budget: "",
-        message: ""
+        message: "",
       });
     }, 3000);
   };
 
-  const handleInputChange = (name: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleInputChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <div className="pt-16 bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-emerald-600 to-teal-700 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+    <div className="bg-gray-50">
+      {/* Hero Section (unchanged) */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-100 via-white to-emerald-200 py-40 sm:py-48">
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-emerald-400 opacity-30 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-400 opacity-20 rounded-full blur-[100px] animate-pulse" />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1 }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight text-emerald-900"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Let&apos;s Start Your <span className="text-emerald-200">Project</span>
-            </h1>
-            <p className="text-xl text-emerald-100 max-w-3xl mx-auto">
-              Ready to transform your ideas into reality? Get in touch with our team to discuss your next project.
-            </p>
-          </motion.div>
+            Let’s Build Your <br />
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400 text-transparent bg-clip-text"
+            >
+              Next Big Idea
+            </motion.span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="mt-6 text-lg sm:text-xl text-emerald-800 max-w-3xl mx-auto"
+          >
+            At Tech Solutions, we specialize in building robust, scalable, and visually stunning digital products. Whether you’re a startup or an enterprise, we turn your ideas into real-world impact through cutting-edge technology and strategic design.
+          </motion.p>
+        </div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <svg
+            className="w-8 h-8 text-emerald-700"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </div>
       </section>
 
-     
-
-      {/* Contact Form & Map */}
-      <section className="py-20 bg-gray-50">
+      {/* Contact Form & Map Section (styled background and components) */}
+      <section className="py-20 bg-gradient-to-br from-emerald-50 via-white to-emerald-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -100,25 +144,34 @@ export default function Contact() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <Card className="shadow-xl">
+              <Card className="shadow-xl border-0 bg-white/90 backdrop-blur-sm">
                 <CardHeader>
-                  <CardTitle className="text-3xl text-gray-600">Get In Touch</CardTitle>
+                  <CardTitle className="text-3xl text-gray-600 flex items-center gap-2">
+                    Get In Touch <MessageCircle className="text-emerald-500 h-6 w-6" />
+                  </CardTitle>
                   <CardDescription className="text-lg text-gray-600">
-                    Fill out the form below and we&apos;ll get back to you as soon as possible.
+                    Fill out the form below and we'll get back to you as soon as possible.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {isSubmitted ? (
                     <div className="text-center py-12">
                       <CheckCircle className="h-16 w-16 text-emerald-600 mx-auto mb-4" />
-                      <h3 className="text-2xl  font-bold text-gray-900 mb-2">Message Sent!</h3>
-                      <p className="text-gray-600">Thank you for reaching out. We&apos;ll get back to you soon.</p>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                        Message Sent!
+                      </h3>
+                      <p className="text-gray-600">
+                        Thank you for reaching out. We'll get back to you soon.
+                      </p>
                     </div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label
+                            htmlFor="name"
+                            className="block text-sm font-medium text-gray-700 mb-2"
+                          >
                             Full Name *
                           </label>
                           <Input
@@ -126,11 +179,14 @@ export default function Contact() {
                             value={formData.name}
                             onChange={(e) => handleInputChange("name", e.target.value)}
                             required
-                            className="focus:ring-emerald-500 focus:border-emerald-500"
+                            className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500"
                           />
                         </div>
                         <div>
-                          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label
+                            htmlFor="email"
+                            className="block text-sm font-medium text-gray-700 mb-2"
+                          >
                             Email Address *
                           </label>
                           <Input
@@ -139,26 +195,30 @@ export default function Contact() {
                             value={formData.email}
                             onChange={(e) => handleInputChange("email", e.target.value)}
                             required
-                            className="focus:ring-emerald-500 focus:border-emerald-500"
+                            className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500"
                           />
                         </div>
                       </div>
-
                       <div>
-                        <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label
+                          htmlFor="company"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
                           Company Name
                         </label>
                         <Input
                           id="company"
                           value={formData.company}
                           onChange={(e) => handleInputChange("company", e.target.value)}
-                          className="focus:ring-emerald-500 focus:border-emerald-500"
+                          className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500"
                         />
                       </div>
-
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label
+                            htmlFor="service"
+                            className="block text-sm font-medium text-gray-700 mb-2"
+                          >
                             Service Needed *
                           </label>
                           <Select onValueChange={(value) => handleInputChange("service", value)}>
@@ -176,7 +236,10 @@ export default function Contact() {
                           </Select>
                         </div>
                         <div>
-                          <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label
+                            htmlFor="budget"
+                            className="block text-sm font-medium text-gray-700 mb-2"
+                          >
                             Project Budget
                           </label>
                           <Select onValueChange={(value) => handleInputChange("budget", value)}>
@@ -192,9 +255,11 @@ export default function Contact() {
                           </Select>
                         </div>
                       </div>
-
                       <div>
-                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label
+                          htmlFor="message"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
                           Project Details *
                         </label>
                         <Textarea
@@ -203,15 +268,14 @@ export default function Contact() {
                           value={formData.message}
                           onChange={(e) => handleInputChange("message", e.target.value)}
                           required
-                          className="focus:ring-emerald-500 focus:border-emerald-500"
+                          className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500"
                           placeholder="Tell us more about your project, timeline, and any specific requirements..."
                         />
                       </div>
-
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 hover:scale-105 transition-transform duration-300 shadow-lg"
                       >
                         <Send className="h-5 w-5 mr-2" />
                         Send Message
@@ -230,19 +294,24 @@ export default function Contact() {
               viewport={{ once: true }}
               className="space-y-8"
             >
-              {/* Map */}
-              <Card className="shadow-xl">
+              <Card className="shadow-xl bg-white/90 backdrop-blur-sm">
                 <CardContent className="p-0">
                   <div className="h-64 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-t-lg flex items-center justify-center">
                     <div className="text-center">
                       <MapPin className="h-12 w-12 text-emerald-600 mx-auto mb-4" />
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Our Location</h3>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">
+                        Our Location
+                      </h3>
                       <p className="text-gray-600">Nairobi, Kenya</p>
-                      <p className="text-sm text-gray-500 mt-2">Interactive map coming soon</p>
+                      <p className="text-sm text-gray-500 mt-2">
+                        Interactive map coming soon
+                      </p>
                     </div>
                   </div>
                   <div className="p-6">
-                    <h4 className="font-semibold text-gray-900 mb-2">Office Hours</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Office Hours
+                    </h4>
                     <div className="space-y-1 text-sm text-gray-600">
                       <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
                       <p>Saturday: 9:00 AM - 2:00 PM</p>
@@ -251,31 +320,43 @@ export default function Contact() {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Response Time */}
-              <Card className="shadow-xl">
+              <Card className="shadow-xl bg-white/90 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h4 className="font-semibold text-gray-900 mb-4">What to Expect</h4>
+                  <h4 className="font-semibold text-gray-900 mb-4">
+                    What to Expect
+                  </h4>
                   <div className="space-y-3">
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-emerald-600 rounded-full mt-2"></div>
                       <div>
-                        <p className="font-medium text-gray-900">Initial Response</p>
-                        <p className="text-sm text-gray-600">We&apos;ll respond to your inquiry within 24 hours</p>
+                        <p className="font-medium text-gray-900">
+                          Initial Response
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          We'll respond to your inquiry within 24 hours
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-emerald-600 rounded-full mt-2"></div>
                       <div>
-                        <p className="font-medium text-gray-900">Consultation Call</p>
-                        <p className="text-sm text-gray-600">Free 30-minute consultation to discuss your project</p>
+                        <p className="font-medium text-gray-900">
+                          Consultation Call
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Free 30-minute consultation to discuss your project
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-emerald-600 rounded-full mt-2"></div>
                       <div>
-                        <p className="font-medium text-gray-900">Project Proposal</p>
-                        <p className="text-sm text-gray-600">Detailed proposal with timeline and pricing within 3-5 days</p>
+                        <p className="font-medium text-gray-900">
+                          Project Proposal
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Detailed proposal with timeline and pricing within 3-5 days
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -285,10 +366,9 @@ export default function Contact() {
           </div>
         </div>
       </section>
- 
 
- {/* Contact Info Cards */}
-      <section className="py-20 bg-white">
+      {/* Contact Info Cards (styled background and components) */}
+      <section className="py-20 bg-gradient-to-br from-white via-emerald-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {contactInfo.map((info, index) => (
@@ -299,13 +379,17 @@ export default function Contact() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="text-center h-full shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-emerald-50">
+                <Card className="text-center h-full shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-emerald-50/50 bg-white/90 backdrop-blur-sm">
                   <CardContent className="p-8">
                     <div className="text-emerald-600 mb-4 flex justify-center">
                       {info.icon}
                     </div>
-                    <CardTitle className="text-xl mb-2 text-gray-500">{info.title}</CardTitle>
-                    <p className="text-emerald-600 font-semibold text-lg mb-2">{info.content}</p>
+                    <CardTitle className="text-xl mb-2 text-gray-500">
+                      {info.title}
+                    </CardTitle>
+                    <p className="text-emerald-600 font-semibold text-lg mb-2">
+                      {info.content}
+                    </p>
                     <CardDescription className="text-gray-600">
                       {info.description}
                     </CardDescription>
@@ -313,6 +397,27 @@ export default function Contact() {
                 </Card>
               </motion.div>
             ))}
+          </div>
+          <div className="mt-20 flex justify-center">
+            <a
+              href="#top"
+              className="flex items-center gap-2 text-emerald-600 hover:text-emerald-800 transition-colors duration-300"
+            >
+              <svg
+                className="w-5 h-5 animate-bounce"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 15l7-7 7 7"
+                />
+              </svg>
+              Back to Top
+            </a>
           </div>
         </div>
       </section>
