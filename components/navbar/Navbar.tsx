@@ -35,7 +35,7 @@ interface Service {
 const navItems = [
   { name: 'About', href: '/about' },
   { name: 'Portfolio', href: '/portfolio' },
-  { name: 'Blogs', href: '/blogs' },
+  { name: 'Blogs', href: '/blog' },
   { name: 'Careers', href: '/careers' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'Contact', href: '/contact' },
@@ -82,24 +82,22 @@ const Navbar = (): JSX.Element => {
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex lg:items-center lg:space-x-1.5">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`group relative flex items-center space-x-2 rounded-lg px-4 py-2 text-md font-medium transition-all duration-200 hover:bg-blue/50 ${isActive(item.href)
-                  ? 'text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg'
-                  : 'text-gray-600 hover:text-emerald-600'
+          {/* About Link */}
+          <Link
+            href="/about"
+            className={`group relative flex items-center space-x-2 rounded-lg px-4 py-2 text-md font-medium transition-all duration-200 hover:bg-blue/50 ${isActive('/about')
+                ? 'text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg'
+                : 'text-gray-600 hover:text-emerald-600'
+              }`}
+          >
+            <span>About</span>
+            <span
+              className={`absolute -bottom-1 left-0 h-0.5 bg-emerald-600 transition-all ${isActive('/about') ? "w-full" : "w-0 group-hover:w-full"
                 }`}
-            >
-              <span>{item.name}</span>
-              <span
-                className={`absolute -bottom-1 left-0 h-0.5 bg-emerald-600 transition-all ${isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"
-                  }`}
-              ></span>
-            </Link>
-          ))}
+            ></span>
+          </Link>
 
-          {/* Services Dropdown */}
+          {/* Services Dropdown - Now between About and Portfolio */}
           <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger asChild>
               <button
@@ -153,8 +151,41 @@ const Navbar = (): JSX.Element => {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* Portfolio Link */}
+          <Link
+            href="/portfolio"
+            className={`group relative flex items-center space-x-2 rounded-lg px-4 py-2 text-md font-medium transition-all duration-200 hover:bg-blue/50 ${isActive('/portfolio')
+                ? 'text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg'
+                : 'text-gray-600 hover:text-emerald-600'
+              }`}
+          >
+            <span>Portfolio</span>
+            <span
+              className={`absolute -bottom-1 left-0 h-0.5 bg-emerald-600 transition-all ${isActive('/portfolio') ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+            ></span>
+          </Link>
+
+          {/* Remaining navigation items */}
+          {navItems.slice(2).map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`group relative flex items-center space-x-2 rounded-lg px-4 py-2 text-md font-medium transition-all duration-200 hover:bg-blue/50 ${isActive(item.href)
+                  ? 'text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg'
+                  : 'text-gray-600 hover:text-emerald-600'
+                }`}
+            >
+              <span>{item.name}</span>
+              <span
+                className={`absolute -bottom-1 left-0 h-0.5 bg-emerald-600 transition-all ${isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+              ></span>
+            </Link>
+          ))}
+
           <Button variant="default" size="lg" asChild className="ml-4 shadow-lg bg-emerald-600 text-white hover:shadow-xl transition-all">
-            <Link href="/contact" className="flex items-center space-x-2">
+            <Link href="/quote" className="flex items-center space-x-2">
               <MessageSquare className="h-4 w-4" />
               <span>Get Quote</span>
             </Link>
@@ -194,19 +225,17 @@ const Navbar = (): JSX.Element => {
 
               {/* Mobile Navigation Items */}
               <div className="flex flex-col space-y-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center space-x-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${isActive(item.href)
-                        ? 'bg-accent text-primary'
-                        : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
-                      }`}
-                  >
-                    <span>{item.name}</span>
-                  </Link>
-                ))}
+                {/* About Link */}
+                <Link
+                  href="/about"
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center space-x-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${isActive('/about')
+                      ? 'bg-accent text-primary'
+                      : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                    }`}
+                >
+                  <span>About</span>
+                </Link>
 
                 {/* Mobile Services */}
                 <div className="space-y-1">
@@ -243,6 +272,33 @@ const Navbar = (): JSX.Element => {
                     ))}
                   </div>
                 </div>
+
+                {/* Portfolio Link */}
+                <Link
+                  href="/portfolio"
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center space-x-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${isActive('/portfolio')
+                      ? 'bg-accent text-primary'
+                      : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                    }`}
+                >
+                  <span>Portfolio</span>
+                </Link>
+
+                {/* Remaining navigation items */}
+                {navItems.slice(2).map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center space-x-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${isActive(item.href)
+                        ? 'bg-accent text-primary'
+                        : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                      }`}
+                  >
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
 
                 <div className="pt-4 border-t">
                   <Button variant="default" size="sm" asChild className="w-full shadow-lg">

@@ -1,190 +1,245 @@
+'use client'
+
 import Link from "next/link"
-import { Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react"
+import { Mail, Phone, MapPin, Linkedin, Twitter, Github, Facebook, Instagram, ArrowRight, Heart } from "lucide-react"
+import { useState, useEffect } from "react"
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const [currentYear, setCurrentYear] = useState(2024)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear())
+    
+    // Show back-to-top button when scrolling down
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true)
+      } else {
+        setIsVisible(false)
+      }
+    }
+
+    window.addEventListener('scroll', toggleVisibility)
+    return () => window.removeEventListener('scroll', toggleVisibility)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-gradient-to-b from-gray-900 to-gray-950 text-white">
+      {/* Newsletter Section */}
+      <div className="bg-emerald-600/10 border-b border-gray-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="text-center lg:text-left">
+              <h3 className="text-2xl font-bold mb-2">Stay Updated with Our Latest</h3>
+              <p className="text-gray-300 max-w-md">Subscribe to our newsletter for updates on new services, tech insights, and exclusive offers.</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="px-4 py-3 rounded-lg bg-white/5 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent flex-grow min-w-0"
+              />
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center">
+                Subscribe
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Company Info */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">T</span>
+          <div className="space-y-6">
+            <div className="flex items-center space-x-3">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 flex items-center justify-center">
+                <span className="text-white font-bold text-lg">D</span>
               </div>
-              <span className="text-xl font-bold text-white">TechSolutions</span>
+              <span className="text-xl font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Digital Fixers
+              </span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Leading software and network service company delivering innovative solutions for businesses worldwide. We
-              transform ideas into powerful digital experiences.
+              Transforming businesses through innovative digital solutions. We create cutting-edge software, 
+              robust infrastructure, and intelligent systems that drive growth and efficiency.
             </p>
             <div className="flex space-x-4">
               <Link
                 href="https://linkedin.com"
-                className="text-gray-400 hover:text-emerald-400 transition-colors"
+                className="text-gray-400 hover:text-emerald-400 transition-colors p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </Link>
               <Link
                 href="https://twitter.com"
-                className="text-gray-400 hover:text-emerald-400 transition-colors"
+                className="text-gray-400 hover:text-emerald-400 transition-colors p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
                 aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </Link>
               <Link
                 href="https://github.com"
-                className="text-gray-400 hover:text-emerald-400 transition-colors"
+                className="text-gray-400 hover:text-emerald-400 transition-colors p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://facebook.com"
+                className="text-gray-400 hover:text-emerald-400 transition-colors p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://instagram.com"
+                className="text-gray-400 hover:text-emerald-400 transition-colors p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
               </Link>
             </div>
           </div>
 
           {/* Services */}
-          <div className="space-y-4">
-            <h3 className="text-white font-semibold">Services</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/services/web-development"
-                  className="text-gray-300 hover:text-emerald-400 transition-colors text-sm"
-                >
-                  Web Development
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/mobile-apps"
-                  className="text-gray-300 hover:text-emerald-400 transition-colors text-sm"
-                >
-                  Mobile Apps
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/cloud-solutions"
-                  className="text-gray-300 hover:text-emerald-400 transition-colors text-sm"
-                >
-                  Cloud Solutions
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/network-infrastructure"
-                  className="text-gray-300 hover:text-emerald-400 transition-colors text-sm"
-                >
-                  Network Infrastructure
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/cybersecurity"
-                  className="text-gray-300 hover:text-emerald-400 transition-colors text-sm"
-                >
-                  Cybersecurity
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/ai-ml" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                  AI & Machine Learning
-                </Link>
-              </li>
+          <div className="space-y-6">
+            <h3 className="text-white font-semibold text-lg border-l-4 border-emerald-500 pl-3">Our Services</h3>
+            <ul className="space-y-3">
+              {[
+                "Web Development",
+                "Mobile Apps",
+                "Cloud Solutions",
+                "Network Infrastructure",
+                "Cybersecurity",
+                "AI & Machine Learning"
+              ].map((service) => (
+                <li key={service}>
+                  <Link
+                    href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="text-gray-300 hover:text-emerald-400 transition-colors text-sm flex items-center group"
+                  >
+                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-3 group-hover:scale-125 transition-transform"></div>
+                    {service}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Company */}
-          <div className="space-y-4">
-            <h3 className="text-white font-semibold">Company</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/about" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/portfolio" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                  Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link href="/careers" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                  Terms of Service
-                </Link>
-              </li>
+          {/* Quick Links */}
+          <div className="space-y-6">
+            <h3 className="text-white font-semibold text-lg border-l-4 border-emerald-500 pl-3">Quick Links</h3>
+            <ul className="space-y-3">
+              {[
+                { name: "About Us", href: "/about" },
+                { name: "Portfolio", href: "/portfolio" },
+                { name: "Careers", href: "/careers" },
+                { name: "Blog", href: "/blog" },
+                { name: "Testimonials", href: "/testimonials" },
+                { name: "Case Studies", href: "/case-studies" }
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-300 hover:text-emerald-400 transition-colors text-sm flex items-center group"
+                  >
+                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-3 group-hover:scale-125 transition-transform"></div>
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Contact */}
-          <div className="space-y-4">
-            <h3 className="text-white font-semibold">Contact</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-gray-400 flex-shrink-0" />
-                <a
-                  href="mailto:info@techsolutions.com"
-                  className="text-gray-300 hover:text-emerald-400 transition-colors text-sm"
-                >
-                  info@techsolutions.com
-                </a>
+          <div className="space-y-6">
+            <h3 className="text-white font-semibold text-lg border-l-4 border-emerald-500 pl-3">Get In Touch</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start space-x-3 group">
+                <Mail className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wide">Email</p>
+                  <a
+                    href="mailto:info@digitalfixers.com"
+                    className="text-gray-300 hover:text-emerald-400 transition-colors text-sm"
+                  >
+                    info@digitalfixers.com
+                  </a>
+                </div>
               </li>
-              <li className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-gray-400 flex-shrink-0" />
-                <a href="tel:+1234567890" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                  +1 (234) 567-890
-                </a>
+              <li className="flex items-start space-x-3 group">
+                <Phone className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wide">Phone</p>
+                  <a href="tel:+254700402570" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
+                    +254 700 402 570
+                  </a>
+                </div>
               </li>
-              <li className="flex items-start space-x-3">
-                <MapPin className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300 text-sm leading-relaxed">
-                  123 Tech Street
-                  <br />
-                  Innovation District
-                  <br />
-                  San Francisco, CA 94105
-                </span>
+              <li className="flex items-start space-x-3 group">
+                <MapPin className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wide">Address</p>
+                  <span className="text-gray-300 text-sm leading-relaxed">
+                    Westlands Business District
+                    <br />
+                    Nairobi, Kenya
+                  </span>
+                </div>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
+        <div className="mt-16 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">© {currentYear} TechSolutions. All rights reserved.</p>
-            <div className="flex space-x-6">
-              <Link href="/privacy" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
-                Privacy
-              </Link>
-              <Link href="/terms" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
-                Terms
-              </Link>
-              <Link href="/cookies" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
-                Cookies
-              </Link>
+            <p className="text-gray-400 text-sm flex items-center">
+              © {currentYear} Digital Fixers. Made with <Heart className="h-4 w-4 text-red-500 mx-1" /> in Kenya
+            </p>
+            <div className="flex flex-wrap gap-4 md:gap-6 justify-center">
+              {[
+                { name: "Privacy Policy", href: "/privacy" },
+                { name: "Terms of Service", href: "/terms" },
+                { name: "Cookie Policy", href: "/cookies" },
+                { name: "Sitemap", href: "/sitemap.xml" }
+              ].map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors text-sm"
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Back to Top Button */}
+      {isVisible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 bg-emerald-600 hover:bg-emerald-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-90 hover:opacity-100 hover:scale-110 z-50"
+          aria-label="Back to top"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
     </footer>
   )
 }
