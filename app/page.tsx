@@ -4,7 +4,7 @@ import HeroSlider from "@/components/hero/HeroSlider"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, Code, Cloud, Shield, Smartphone, Network, Brain, Star, CheckCircle, Users, Target, BarChart, MessageSquare, Clock, Award, ChevronDown, ChevronUp, Link2, ExternalLink, Quote, ChevronLeft, ChevronRight, MapPin, Building2, QuoteIcon } from "lucide-react"
+import { ArrowRight, Code, Cloud, Smartphone, Star, CheckCircle, Users, Target, BarChart, MessageSquare, Clock, Award, ChevronDown, ChevronUp, ExternalLink, MapPin } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { BiSolidQuoteAltLeft } from "react-icons/bi";
