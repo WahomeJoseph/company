@@ -63,10 +63,10 @@ export default function Footer() {
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
               <div className="h-10 w-10 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">D</span>
+                <span className="text-white font-bold text-lg">𝓒𝓦</span>
               </div>
               <span className="text-xl font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Digital Fixers
+              𝓒𝓻𝓮𝓭𝓲𝓫𝓵𝓮 𝓦𝓮𝓫𝓦𝓸𝓻𝓴𝓼
               </span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
@@ -205,7 +205,7 @@ export default function Footer() {
         <div className="mt-16 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm flex items-center">
-              © {currentYear} Digital Fixers. Made with <Heart className="h-4 w-4 text-red-500 mx-1" /> in Kenya
+              © {currentYear} 𝓒𝓻𝓮𝓭𝓲𝓫𝓵𝓮 𝓦𝓮𝓫𝓦𝓸𝓻𝓴𝓼. Made with <Heart className="h-4 w-4 text-red-500 mx-1" /> in Kenya
             </p>
             <div className="flex flex-wrap gap-4 md:gap-6 justify-center">
               {[

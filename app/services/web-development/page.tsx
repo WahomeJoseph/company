@@ -399,7 +399,7 @@ export default function WebDevelopmentPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                quote: "Digital Fixers transformed our outdated website into a modern, responsive platform that has increased our leads by 40% in just three months.",
+                quote: "𝓒𝓻𝓮𝓭𝓲𝓫𝓵𝓮 𝓦𝓮𝓫𝓦𝓸𝓻𝓴𝓼 transformed our outdated website into a modern, responsive platform that has increased our leads by 40% in just three months.",
                 name: "Sarah K., Nairobi Retail Business",
                 role: "Business Owner"
               },

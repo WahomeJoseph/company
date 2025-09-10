@@ -1,6 +1,7 @@
 'use client'
 
 import { JSX, useState } from 'react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -73,8 +74,18 @@ const Navbar = (): JSX.Element => {
           href="/"
           className="group flex items-center ml-14 space-x-3 transition-transform hover:scale-105"
         >
+          <Image
+          src={'/Logo.png'}
+          className="rounded-full"
+          alt='Credible WebWorks Logo'
+          width={70}
+          height={70}
+          priority
+          
+          />
           <span className="text-xl font-bold text-emerald-700 transition-colors group-hover:text-primary">
-            🅓🅘🅖🅘🅣🅐🅛 🅕🅘🅧🅔🅡🅢
+            {/* 🅓🅘🅖🅘🅣🅐🅛 🅕🅘🅧🅔🅡🅢 */}
+            𝓒𝓻𝓮𝓭𝓲𝓫𝓵𝓮 𝓦𝓮𝓫𝓦𝓸𝓻𝓴𝓼
           </span>
         </Link>
 
