@@ -4,9 +4,10 @@ import HeroSlider from "@/components/hero/HeroSlider"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, Code, Cloud, Shield, Smartphone, Network, Brain, Star, CheckCircle, Users, Target, BarChart, MessageSquare, Clock, Award, ChevronDown, ChevronUp, Link2, ExternalLink } from "lucide-react"
+import { ArrowRight, Code, Cloud, Shield, Smartphone, Network, Brain, Star, CheckCircle, Users, Target, BarChart, MessageSquare, Clock, Award, ChevronDown, ChevronUp, Link2, ExternalLink, Quote, ChevronLeft, ChevronRight, MapPin, Building2, QuoteIcon } from "lucide-react"
 import Link from "next/link"
-import { SetStateAction, useState } from "react"
+import { useState } from "react"
+import { BiSolidQuoteAltLeft } from "react-icons/bi";
 
 export default function HomePage() {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
@@ -73,22 +74,52 @@ export default function HomePage() {
 
   const testimonials = [
     {
-      quote: "Digital Fixers transformed our outdated website into a modern platform that increased our leads by 40% in just three months.",
-      name: "Sarah K.",
-      company: "Nairobi Retail Business",
-      rating: 5
+      quote: "Our online sales increased by 300% within 3 months of launching our new website. The M-Pesa integration made it so easy for our customers to pay.",
+      name: "Sarah Wanjiku",
+      company: "Nairobi Fashion House",
+      rating: 5,
+      location: "Nairobi, Kenya",
+      industry: "Fashion & Retail"
     },
     {
-      quote: "Their team understood our vision perfectly and delivered a complex web application that exceeded our expectations.",
-      name: "James M.",
-      company: "Tech Startup Founder",
-      rating: 5
+      quote: "The SEO work they did helped us rank #1 for 'best restaurant Mombasa'. Our bookings have tripled and we're booked solid every weekend.",
+      name: "Ahmed Hassan",
+      company: "Coastal Delights Restaurant",
+      rating: 5,
+      location: "Mombasa, Kenya",
+      industry: "Hospitality"
     },
     {
-      quote: "The cybersecurity solutions implemented have protected our business from multiple threats. Highly recommended!",
-      name: "David W.",
-      company: "Financial Services Company",
-      rating: 5
+      quote: "From a small local business to serving customers across East Africa. Their e-commerce platform handles everything from inventory to shipping seamlessly.",
+      name: "Grace Muthoni",
+      company: "Kiambu Tea Exports",
+      rating: 5,
+      location: "Kiambu, Kenya",
+      industry: "Agriculture & Export"
+    },
+    {
+      quote: "The mobile app they built for our logistics company has streamlined our entire operation. Real-time tracking and automated billing saved us 40+ hours weekly.",
+      name: "James Kariuki",
+      company: "Rapid Express Kenya",
+      rating: 5,
+      location: "Nakuru, Kenya",
+      industry: "Logistics & Transport"
+    },
+    {
+      quote: "Professional, reliable, and they understand the Kenyan market. Our digital transformation journey was smooth and the results speak for themselves.",
+      name: "Fatima Abdi",
+      company: "Eastleigh Electronics",
+      rating: 5,
+      location: "Nairobi, Kenya",
+      industry: "Electronics & Technology"
+    },
+    {
+      quote: "They helped us digitize our entire farming cooperative. Now our 200+ farmers can access market prices, weather data, and sell directly to buyers online.",
+      name: "Peter Kimani",
+      company: "Mount Kenya Cooperative",
+      rating: 5,
+      location: "Meru, Kenya",
+      industry: "Agriculture & Cooperative"
     }
   ]
 
@@ -114,6 +145,8 @@ export default function HomePage() {
       icon: Clock
     }
   ]
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const testimonialsPerPage = 3;
 
   const toggleProject = (index: number) => {
     setExpandedProject(expandedProject === index ? null : index);
@@ -122,9 +155,55 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Slider */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto">
-          <HeroSlider />
+      <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+            style={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80')`
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 to-slate-900/80"></div>
+        </div>
+
+        <div className="container mx-auto relative px-4 z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-white">
+              <div>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance leading-tight">
+                  Transform Your <span className="text-emerald-400">Business</span> with Digital Excellence
+                </h1>
+                <p className="text-xl text-slate-200 mb-8 leading-relaxed max-w-lg">
+                  We create cutting-edge digital solutions that drive growth, enhance efficiency,
+                  and position Kenyan businesses for success in the digital age.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button asChild size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white text-lg rounded-3xl px-8 py-6 font-semibold">
+                    <Link href="/contact">
+                      Start Your Project
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="border-none text-white hover:bg-white rounded-3xl hover:text-slate-900 text-lg px-8 py-6 font-semibold">
+                    <Link href="/portfolio">
+                      View Our Work
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Hero Slider */}
+            <div className="pr-10 relative">
+              <div className="aspect-[5/5] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 backdrop-blur-sm">
+                <HeroSlider />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -222,7 +301,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Projects Showcase - FIXED SECTION */}
+      {/* Projects Showcase */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto">
           <div className="text-center mb-16">
@@ -340,44 +419,119 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Button asChild variant="outline" className="border-emerald-600 text-emerald-600 hover:bg-emerald-50">
-              <Link href="/portfolio">
-                View Full Portfolio
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+          <div className="flex items-center justify-center mt-20">
+            {/* cta card */}
+            <Card className="bg-emerald-100/20 max-w-xl border-t-4  text-white rounded-2xl shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-3xl text-amber-600 text-center font-bold">
+                  Ready to Take Your Business Online?
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-black/90 text-center text-[1.2rem] mb-6">
+                  If you are looking to build your business online and digitally, Look no further,
+                  Let’s build a modern website that attracts clients and grows your brand.
+                </p>
+                <div className="flex items-center justify-center">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-emerald-600 text-emerald-100 w-1/2 rounded-full">
+                    <Link href="/contact">
+                      Get Started
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+                </div>
+
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-emerald-50">
-        <div className="container mx-auto">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-emerald-50/30 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-72 h-72 bg-emerald-200/20 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-200/20 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl"></div>
+
+        <div className="container mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Trusted by <span className="border-b-4 text-emerald-600">100+ Kenyan Businesses</span>
+            </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Hear from businesses that have transformed their operations with our solutions
+              Discover why businesses across Kenya choose Digital Fixers for their digital transformation journey
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 px-20 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-white p-6 text-center">
-                <div className="flex justify-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-amber-600 text-amber-600" />
-                  ))}
+              <Card
+                key={index}
+                className="bg-white p-8 text-center group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg hover:-translate-y-2 relative overflow-hidden">
+                <div className="flex justify-center mb-6">
+                  <div className="bg-amber-50 px-4 py-2 rounded-full inline-flex items-center border border-amber-100">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-5 w-5 ${i < testimonial.rating
+                          ? "fill-amber-400 text-amber-400"
+                          : "fill-amber-200 text-amber-200"
+                          } transition-transform duration-300 group-hover:scale-110 ${i === 0 ? "ml-0" : "ml-1"
+                          }`}
+                      />
+                    ))}
+                    <span className="ml-2 text-amber-700 text-sm font-semibold">{testimonial.rating}.0</span>
+                  </div>
                 </div>
-                <p className="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
-                <div>
-                  <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">{testimonial.company}</p>
+
+                {/* Quote with decorative icons */}
+                <div className="relative mb-8">
+                  <BiSolidQuoteAltLeft size={32} className="text-emerald-600" />
+                  <p className="text-gray-700 text-lg leading-relaxed italic relative z-10 group-hover:text-gray-800 transition-colors">
+                    {testimonial.quote}
+                  </p>
                 </div>
+
+                {/* Client info with avatar placeholder */}
+                <div className="border-t border-gray-100 pt-6 group-hover:border-gray-200 transition-colors">
+                  <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-lg group-hover:scale-110 transition-transform">
+                    {testimonial.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900 text-lg mb-1 group-hover:text-emerald-600 transition-colors">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-sm text-gray-500 group-hover:text-gray-600 transition-colors">
+                      {testimonial.company}
+                    </p>
+                    <div className="flex items-center justify-center gap-2 mt-2 text-xs text-gray-400">
+                      <MapPin className="h-3 w-3" />
+                      {testimonial.location}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      {testimonial.industry}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Hover effect overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-emerald-50/0 group-hover:from-white/50 group-hover:to-emerald-50/50 transition-all duration-500 -z-10 rounded-lg"></div>
               </Card>
             ))}
           </div>
 
+          {/* CTA */}
+          <div className="mt-16 text-center">
+            <Button asChild size="lg" className="bg-emerald-600 rounded-full hover:bg-emerald-700 text-white px-8">
+              <Link href="/testimonials">
+                Read More Success Stories
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -435,6 +589,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      
 
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-r from-emerald-700 to-emerald-600 text-white">

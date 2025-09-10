@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Check,
   Star,
@@ -16,13 +16,16 @@ import {
   Server,
   Lock,
   Cpu,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import ScrollDown from "@/components/scrollDown/ScrollDown";
+import Link from "next/link";
 
 // Exchange rate: 1 USD = 150 Ksh (adjust as needed)
 const exchangeRate = 126;
@@ -121,7 +124,7 @@ const services = {
       },
       {
         question: "Can I upgrade my package later?",
-        answer: "Absolutely! You can upgrade your package at any time. We’ll work with you to add new features and functionality seamlessly.",
+        answer: "Absolutely! You can upgrade your package at any time. We'll work with you to add new features and functionality seamlessly.",
       },
     ],
   },
@@ -335,280 +338,132 @@ const services = {
       },
     ],
   },
-  "cybersecurity": {
-    name: "Cybersecurity",
-    plans: [
-      {
-        name: "Basic Security",
-        description: "Essential security measures for small businesses.",
-        price: { ksh: "From 25,000", usd: `From $${Math.round(25000 / exchangeRate)}` },
-        features: [
-          { text: "Basic firewall setup", icon: <Shield className="h-5 w-5 text-emerald-500" /> },
-          { text: "Antivirus & malware protection", icon: <Lock className="h-5 w-5 text-emerald-500" /> },
-          { text: "Security awareness training", icon: <MessageCircle className="h-5 w-5 text-emerald-500" /> },
-          { text: "Regular security updates", icon: <Code className="h-5 w-5 text-emerald-500" /> },
-          { text: "3 months of free support", icon: <MessageCircle className="h-5 w-5 text-emerald-500" /> },
-        ],
-        popular: false,
-        buttonText: "Get Started",
-        icon: <Shield className="h-8 w-8 text-white" />,
-      },
-      {
-        name: "Professional Security",
-        description: "Advanced security solutions for medium-sized businesses.",
-        price: { ksh: "From 80,000", usd: `From $${Math.round(80000 / exchangeRate)}` },
-        features: [
-          { text: "Everything in Basic Security", icon: <Check className="h-5 w-5 text-emerald-500" /> },
-          { text: "Intrusion detection system", icon: <Lock className="h-5 w-5 text-emerald-500" /> },
-          { text: "Regular vulnerability scanning", icon: <Shield className="h-5 w-5 text-emerald-500" /> },
-          { text: "Data encryption", icon: <Code className="h-5 w-5 text-emerald-500" /> },
-          { text: "6 months of free support", icon: <MessageCircle className="h-5 w-5 text-emerald-500" /> },
-        ],
-        popular: true,
-        buttonText: "Start Free Consultation",
-        icon: <Shield className="h-8 w-8 text-white" />,
-      },
-      {
-        name: "Enterprise Security",
-        description: "Comprehensive security solutions for large businesses or high-risk environments.",
-        price: { ksh: "Negotiable", usd: "Negotiable" },
-        features: [
-          { text: "Everything in Professional Security", icon: <Check className="h-5 w-5 text-emerald-500" /> },
-          { text: "24/7 security monitoring", icon: <Lock className="h-5 w-5 text-emerald-500" /> },
-          { text: "Penetration testing", icon: <Shield className="h-5 w-5 text-emerald-500" /> },
-          { text: "Incident response planning", icon: <Code className="h-5 w-5 text-emerald-500" /> },
-          { text: "Dedicated security engineer", icon: <MessageCircle className="h-5 w-5 text-emerald-500" /> },
-        ],
-        popular: false,
-        buttonText: "Contact Sales",
-        icon: <Shield className="h-8 w-8 text-white" />,
-      },
-    ],
-    faqs: [
-      {
-        question: "What security measures do you implement?",
-        answer: "We implement firewalls, encryption, intrusion detection, regular audits, and employee training.",
-      },
-      {
-        question: "How do you handle data breaches?",
-        answer: "We have a dedicated incident response team to handle breaches and minimize impact.",
-      },
-      {
-        question: "Do you provide compliance consulting?",
-        answer: "Yes, we help with GDPR, HIPAA, PCI-DSS, and other compliance requirements.",
-      },
-      {
-        question: "Can you train our employees on security best practices?",
-        answer: "Absolutely! We offer comprehensive security awareness training.",
-      },
-    ],
-  },
-  "ai-ml": {
-    name: "AI & Machine Learning",
-    plans: [
-      {
-        name: "Basic AI Solution",
-        description: "Simple AI integration for small businesses or startups.",
-        price: { ksh: "From 80,000", usd: `From $${Math.round(80000 / exchangeRate)}` },
-        features: [
-          { text: "Custom AI model development", icon: <Cpu className="h-5 w-5 text-emerald-500" /> },
-          { text: "Data collection & preprocessing", icon: <Code className="h-5 w-5 text-emerald-500" /> },
-          { text: "Basic analytics dashboard", icon: <Globe className="h-5 w-5 text-emerald-500" /> },
-          { text: "3 months of free support", icon: <MessageCircle className="h-5 w-5 text-emerald-500" /> },
-        ],
-        popular: false,
-        buttonText: "Get Started",
-        icon: <Cpu className="h-8 w-8 text-white" />,
-      },
-      {
-        name: "Professional AI Solution",
-        description: "Advanced AI solutions for businesses looking to automate processes or gain insights.",
-        price: { ksh: "From 250,000", usd: `From $${Math.round(250000 / exchangeRate)}` },
-        features: [
-          { text: "Everything in Basic AI Solution", icon: <Check className="h-5 w-5 text-emerald-500" /> },
-          { text: "Custom machine learning models", icon: <Cpu className="h-5 w-5 text-emerald-500" /> },
-          { text: "Advanced analytics & reporting", icon: <Globe className="h-5 w-5 text-emerald-500" /> },
-          { text: "Integration with existing systems", icon: <Code className="h-5 w-5 text-emerald-500" /> },
-          { text: "6 months of free support", icon: <MessageCircle className="h-5 w-5 text-emerald-500" /> },
-        ],
-        popular: true,
-        buttonText: "Start Free Consultation",
-        icon: <Cpu className="h-8 w-8 text-white" />,
-      },
-      {
-        name: "Enterprise AI Solution",
-        description: "Full-scale AI solutions with dedicated support and custom development.",
-        price: { ksh: "Negotiable", usd: "Negotiable" },
-        features: [
-          { text: "Everything in Professional AI Solution", icon: <Check className="h-5 w-5 text-emerald-500" /> },
-          { text: "Custom AI infrastructure", icon: <Server className="h-5 w-5 text-emerald-500" /> },
-          { text: "Dedicated AI engineer", icon: <Cpu className="h-5 w-5 text-emerald-500" /> },
-          { text: "Advanced data processing", icon: <Code className="h-5 w-5 text-emerald-500" /> },
-          { text: "12 months of dedicated support", icon: <MessageCircle className="h-5 w-5 text-emerald-500" /> },
-        ],
-        popular: false,
-        buttonText: "Contact Sales",
-        icon: <Cpu className="h-8 w-8 text-white" />,
-      },
-    ],
-    faqs: [
-      {
-        question: "What AI solutions do you offer?",
-        answer: "We offer custom AI models, machine learning solutions, natural language processing, and predictive analytics.",
-      },
-      {
-        question: "How long does it take to develop an AI solution?",
-        answer: "Timelines vary based on complexity: Basic (4-6 weeks), Professional (8-12 weeks), Enterprise (3-6 months).",
-      },
-      {
-        question: "Do you provide AI training for our team?",
-        answer: "Yes! We offer training to help your team understand and use the AI solutions effectively.",
-      },
-      {
-        question: "Can you integrate AI with our existing systems?",
-        answer: "Absolutely! We ensure seamless integration with your current infrastructure.",
-      },
-    ],
-  },
 };
+
 
 export default function Pricing() {
   const [currency, setCurrency] = useState<"ksh" | "usd">("ksh");
-  const [selectedService, setSelectedService] = useState("web-development");
+  const [selectedService, setSelectedService] = useState<keyof typeof services>("web-development");
+  const shouldReduceMotion = useReducedMotion();
+
+  const serviceKeys = Object.keys(services);
 
   return (
     <div className="bg-gray-50 relative">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-emerald-50 via-white to-emerald-100 py-24">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 text-center">
+      <section className="bg-gradient-to-br from-emerald-50 via-white to-emerald-100 py-20 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl font-extrabold text-gray-800 mb-6 leading-tight">
-              {services[selectedService].name} <br />
-              <span className="text-emerald-500 underline decoration-wavy">Pricing</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
+              {services[selectedService].name}{" "}
+              <span className="text-emerald-600">Pricing</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-6">
-              One-time fee for your custom {services[selectedService].name.toLowerCase()}. Transparent pricing, no hidden costs, and tailored solutions for your business.
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-6 md:mb-8">
+              One-time fee for your custom {services[selectedService].name.toLowerCase()}. 
+              Transparent pricing, no hidden costs, and tailored solutions for your business.
             </p>
-            <p className="text-md md:text-lg text-gray-500 mb-8 flex items-center justify-center gap-2">
-              <Phone className="h-5 w-5 text-emerald-500" />
-              <span>
-                Contact us:{" "}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 text-base md:text-lg text-gray-700">
+              <div className="flex items-center gap-2">
+                <Phone className="h-5 w-5 text-emerald-600" />
+                <span>Contact us:</span>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2">
                 <a
                   href="tel:+254113730593"
-                  className="text-emerald-600 font-semibold hover:underline transition-all"
+                  className="text-emerald-700 font-medium hover:underline transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-md px-2 py-1"
                 >
                   +254 113 730 593
                 </a>
-              </span>
-            </p>
-            {/* Service Tabs */}
-            <Tabs
-              value={selectedService}
-              onValueChange={setSelectedService}
-              className="w-fit mx-auto mb-8"
-            >
-              <TabsList className="backdrop-blur-md bg-white/30 border border-emerald-200 shadow-md rounded-full px-2 py-1 grid grid-cols-3">
-                <TabsTrigger
-                  value="web-development"
-                  className="px-4 py-2 rounded-full data-[state=active]:bg-emerald-500 data-[state=active]:text-white text-gray-700 hover:bg-emerald-100 transition-all"
+                <span className="text-gray-500">or</span>
+                <a
+                  href="tel:+254795969757"
+                  className="text-emerald-700 font-medium hover:underline transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-md px-2 py-1"
                 >
-                  Web Development
-                </TabsTrigger>
-                <TabsTrigger
-                  value="mobile-apps"
-                  className="px-4 py-2 rounded-full data-[state=active]:bg-emerald-500 data-[state=active]:text-white text-gray-700 hover:bg-emerald-100 transition-all"
+                  +254 795 969 757
+                </a>
+              </div>
+            </div>
+
+            {/* Currency Toggle */}
+            <div className="mb-5">
+              <Tabs
+                value={currency}
+                onValueChange={(value) => setCurrency(value as "ksh" | "usd")}
+                className="w-fit mx-auto"
+              >
+                <TabsList 
+                  className="backdrop-blur-md bg-white/70 border border-emerald-100 shadow-sm rounded-lg p-1"
+                  role="tablist"
+                  aria-label="Select currency"
                 >
-                  Mobile Apps
-                </TabsTrigger>
-                <TabsTrigger
-                  value="cloud-solutions"
-                  className="px-4 py-2 rounded-full data-[state=active]:bg-emerald-500 data-[state=active]:text-white text-gray-700 hover:bg-emerald-100 transition-all"
-                >
-                  Cloud Solutions
-                </TabsTrigger>
-              </TabsList>
-              <TabsList className="backdrop-blur-md bg-white/30 border border-emerald-200 shadow-md rounded-full px-2 py-1 grid grid-cols-3 mt-2">
-                <TabsTrigger
-                  value="network-infrastructure"
-                  className="px-4 py-2 rounded-full data-[state=active]:bg-emerald-500 data-[state=active]:text-white text-gray-700 hover:bg-emerald-100 transition-all"
-                >
-                  Network Infrastructure
-                </TabsTrigger>
-                <TabsTrigger
-                  value="cybersecurity"
-                  className="px-4 py-2 rounded-full data-[state=active]:bg-emerald-500 data-[state=active]:text-white text-gray-700 hover:bg-emerald-100 transition-all"
-                >
-                  Cybersecurity
-                </TabsTrigger>
-                <TabsTrigger
-                  value="ai-ml"
-                  className="px-4 py-2 rounded-full data-[state=active]:bg-emerald-500 data-[state=active]:text-white text-gray-700 hover:bg-emerald-100 transition-all"
-                >
-                  AI & Machine Learning
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-            {/* Currency Tabs */}
-            <Tabs
-              value={currency}
-              onValueChange={(value) => setCurrency(value as "ksh" | "usd")}
-              className="w-fit mx-auto mb-12"
-            >
-              <TabsList className="backdrop-blur-md bg-white/30 border border-emerald-200 shadow-md rounded-full px-2 py-1">
-                <TabsTrigger
-                  value="ksh"
-                  className="px-6 py-2 rounded-full data-[state=active]:bg-emerald-500 data-[state=active]:text-white text-gray-700 hover:bg-emerald-100 transition-all"
-                >
-                  Ksh (Kenyan Shilling)
-                </TabsTrigger>
-                <TabsTrigger
-                  value="usd"
-                  className="px-6 py-2 rounded-full data-[state=active]:bg-emerald-500 data-[state=active]:text-white text-gray-700 hover:bg-emerald-100 transition-all"
-                >
-                  USD (US Dollar)
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
+                  <TabsTrigger
+                    value="ksh"
+                    role="tab"
+                    aria-selected={currency === "ksh"}
+                    className="px-6 py-3 rounded-md data-[state=active]:bg-emerald-600 data-[state=active]:text-white text-gray-700 hover:bg-emerald-50 transition-all text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                  >
+                    KSH
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="usd"
+                    role="tab"
+                    aria-selected={currency === "usd"}
+                    className="px-6 py-3 rounded-md data-[state=active]:bg-emerald-600 data-[state=active]:text-white text-gray-700 hover:bg-emerald-50 transition-all text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                  >
+                    USD
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
           </motion.div>
         </div>
         <ScrollDown />
       </section>
 
       {/* Pricing Cards */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {services[selectedService].plans.map((plan, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -8 }}
+              transition={{ 
+                duration: shouldReduceMotion ? 0 : 0.6, 
+                delay: shouldReduceMotion ? 0 : index * 0.1 
+              }}
+              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+              whileHover={shouldReduceMotion ? {} : { y: -8 }}
+              className="h-full"
             >
               <Card
-                className={`relative h-full flex flex-col ${
-                  plan.popular ? "border-emerald-500 border-2 shadow-xl" : "shadow-lg"
-                } hover:shadow-2xl transition-all duration-300`}
+                className={`relative h-full flex flex-col transition-all duration-300 ${
+                  plan.popular 
+                    ? "border-2 border-emerald-500 shadow-xl" 
+                    : "border border-gray-200 shadow-md hover:shadow-lg"
+                }`}
               >
                 {plan.popular && (
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white flex items-center space-x-1 py-1 px-3 rounded-full">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                    <Badge 
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white flex items-center space-x-1 py-1.5 px-4 rounded-full shadow-md"
+                      aria-label="Most Popular Plan"
+                    >
                       <Star className="h-4 w-4 fill-current" />
-                      <span>Most Popular</span>
+                      <span className="font-semibold">Most Popular</span>
                     </Badge>
                   </div>
                 )}
-                <CardHeader className="text-center pb-6 flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-emerald-600 flex items-center justify-center mb-4">
+                <CardHeader className="text-center pb-6 flex flex-col items-center pt-8">
+                  <div className="w-16 h-16 rounded-full bg-emerald-600 flex items-center justify-center mb-4 shadow-md">
                     {plan.icon}
                   </div>
                   <CardTitle className="text-2xl font-bold text-gray-900">{plan.name}</CardTitle>
-                  <CardDescription className="text-gray-600 mt-2 text-lg">
+                  <CardDescription className="text-gray-600 mt-2 text-base leading-relaxed">
                     {plan.description}
                   </CardDescription>
                 </CardHeader>
@@ -619,24 +474,28 @@ export default function Pricing() {
                     </span>
                     <p className="text-gray-600 text-sm mt-1">One-time fee</p>
                   </div>
-                  <ul className="space-y-4 mb-8 flex-grow">
+                  <ul className="space-y-3 mb-8 flex-grow">
                     {plan.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start">
-                        <div className="mr-3 mt-0.5">{feature.icon}</div>
-                        <span className="text-gray-700 font-medium">{feature.text}</span>
+                        <div className="mr-3 mt-0.5 flex-shrink-0" aria-hidden="true">
+                          {feature.icon}
+                        </div>
+                        <span className="text-gray-700 text-sm md:text-base">{feature.text}</span>
                       </li>
                     ))}
                   </ul>
+                  <Link href='/contact'>
                   <Button
-                    className={`w-full py-3 text-lg ${
+                    className={`w-full py-3 text-base font-medium ${
                       plan.popular
                         ? "bg-emerald-600 hover:bg-emerald-700"
-                        : "border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white"
-                    }`}
-                    variant={plan.popular ? "default" : "outline"}
+                        : "bg-white text-emerald-600 border border-emerald-600 hover:bg-emerald-50"
+                    } focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2`}
+                    size="lg"
                   >
                     {plan.buttonText}
                   </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </motion.div>
@@ -645,34 +504,42 @@ export default function Pricing() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
+      <section className="py-16 md:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Frequently Asked <span className="text-emerald-600">Questions</span>
             </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Everything you need to know about our {services[selectedService]?.name.toLowerCase()} services.
+            </p>
           </motion.div>
-          <div className="space-y-6">
+          <div className="space-y-4">
             {services[selectedService].faqs.map((faq, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                transition={{ 
+                  duration: shouldReduceMotion ? 0 : 0.4, 
+                  delay: shouldReduceMotion ? 0 : index * 0.1 
+                }}
+                viewport={{ once: true, margin: "0px 0px -50px 0px" }}
               >
-                <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300">
+                <Card className="shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
                   <CardContent className="p-6">
-                    <CardTitle className="text-xl font-bold text-gray-900 mb-3">{faq.question}</CardTitle>
-                    <CardDescription className="text-gray-700 leading-relaxed">
+                    <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-3">
+                      {faq.question}
+                    </h3>
+                    <div className="text-gray-700 leading-relaxed prose prose-emerald max-w-none">
                       {faq.answer}
-                    </CardDescription>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>

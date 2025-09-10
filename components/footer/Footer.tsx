@@ -121,8 +121,6 @@ export default function Footer() {
                 "Mobile Apps",
                 "Cloud Solutions",
                 "Network Infrastructure",
-                "Cybersecurity",
-                "AI & Machine Learning"
               ].map((service) => (
                 <li key={service}>
                   <Link
@@ -146,8 +144,6 @@ export default function Footer() {
                 { name: "Portfolio", href: "/portfolio" },
                 { name: "Careers", href: "/careers" },
                 { name: "Blog", href: "/blog" },
-                { name: "Testimonials", href: "/testimonials" },
-                { name: "Case Studies", href: "/case-studies" }
               ].map((link) => (
                 <li key={link.name}>
                   <Link
@@ -182,9 +178,14 @@ export default function Footer() {
                 <Phone className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="text-gray-400 text-xs uppercase tracking-wide">Phone</p>
-                  <a href="tel:+254700402570" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
-                    +254 700 402 570
+                  <div className="flex flex-col items-center">
+                  <a href="tel:+254795969757" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
+                    +254 795969757
                   </a>
+                  <a href="tel:+254113730593" className="text-gray-300 hover:text-emerald-400 transition-colors text-sm">
+                    +254 113730593
+                  </a>
+                  </div>
                 </div>
               </li>
               <li className="flex items-start space-x-3 group">
@@ -192,8 +193,6 @@ export default function Footer() {
                 <div>
                   <p className="text-gray-400 text-xs uppercase tracking-wide">Address</p>
                   <span className="text-gray-300 text-sm leading-relaxed">
-                    Westlands Business District
-                    <br />
                     Nairobi, Kenya
                   </span>
                 </div>

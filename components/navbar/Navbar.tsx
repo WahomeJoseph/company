@@ -46,8 +46,6 @@ const services: Service[] = [
   { name: 'Mobile Apps', href: '/services/mobile-apps', icon: Smartphone },
   { name: 'Cloud Solutions', href: '/services/cloud-solutions', icon: Cloud },
   { name: 'Network Infrastructure', href: '/services/network-infrastructure', icon: Network },
-  { name: 'Cybersecurity', href: '/services/cybersecurity', icon: Shield },
-  { name: 'AI & Machine Learning', href: '/services/ai-ml', icon: Brain },
 ];
 
 const Navbar = (): JSX.Element => {
