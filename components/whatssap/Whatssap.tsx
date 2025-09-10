@@ -46,7 +46,7 @@ function WhatsApp() {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className='space-y-1'>
-                  <span className="text-md font-semibold text-gray-800">We're here for you</span>
+                  <span className="text-md font-semibold text-gray-800">We&apos;re here for you</span>
                   <h3 className="text-sm font-light text-gray-800">Chat with us:</h3>
                 </div>
                 <button

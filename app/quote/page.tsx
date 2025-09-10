@@ -42,8 +42,8 @@ export default function GetQuote() {
           Get a <span className="text-emerald-600">Quote</span>
         </h1>
         <p className="mb-8 text-gray-600 text-center md:text-left max-w-md">
-          Not sure what a quote is? It's a personalized estimate of the cost and timeline for your project.
-          Submit your details below and we'll provide a tailored plan that fits your needs.
+          Not sure what a quote is? It&apos;s a personalized estimate of the cost and timeline for your project.
+          Submit your details below and we&apos;ll provide a tailored plan that fits your needs.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto md:mx-0">

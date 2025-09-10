@@ -1,25 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Code, Palette, Database, Zap, Shield, Globe, Clock, Users, CheckCircle, BarChart, Target, Heart, Smartphone, MessageSquare } from "lucide-react"
+import { ArrowRight, Code, Palette, Database, Zap, Shield, Globe, Clock, Users, CheckCircle, BarChart, Target, Smartphone, MessageSquare } from "lucide-react"
 import Link from "next/link"
 
 export default function WebDevelopmentPage() {
-  const technologies = [
-    "React",
-    "Next.js",
-    "TypeScript",
-    "Node.js",
-    "Python",
-    "PostgreSQL",
-    "MongoDB",
-    "AWS",
-    "Docker",
-    "Kubernetes",
-    "GraphQL",
-    "REST APIs",
-  ]
-
   const features = [
     {
       icon: Code,
@@ -246,7 +231,7 @@ export default function WebDevelopmentPage() {
                     <CheckCircle className="h-6 w-6 text-emerald-500" />
                   </div>
                   <div className="pt-2">
-                    <span className="text-black font-medium">Mobile-first approach for Kenya's mobile-centric users</span>
+                    <span className="text-black font-medium">Mobile-first approach for Kenya&apos;s mobile-centric users</span>
                   </div>
                 </div>
               </div>
@@ -422,7 +407,7 @@ export default function WebDevelopmentPage() {
                     </span>
                   ))}
                 </div>
-                <p className="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
+                <p className="text-gray-600 italic mb-6">{testimonial.quote}</p>
                 <div>
                   <p className="font-semibold text-gray-900">{testimonial.name}</p>
                   <p className="text-sm text-gray-500">{testimonial.role}</p>
@@ -438,7 +423,7 @@ export default function WebDevelopmentPage() {
         <div className="container mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Transform Your Online Presence?</h2>
           <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Let's discuss your project requirements and create a website that drives results for your Kenyan business.
+            Let&apos;s discuss your project requirements and create a website that drives results for your Kenyan business.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="text-lg px-8 bg-white text-emerald-700 hover:bg-gray-100 font-semibold">

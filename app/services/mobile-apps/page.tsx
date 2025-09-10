@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Smartphone, Tablet, Zap, Users, Store, Wifi, Code, Shield, BarChart, Clock, MessageSquare, CheckCircle, Award, Cloud, Database, Palette, Cpu, GitBranch, Settings } from "lucide-react"
+import { ArrowRight, Smartphone, Tablet, Zap, Users, Store, Wifi, Code, Shield, BarChart, Clock, MessageSquare, CheckCircle, Database, Palette, Settings } from "lucide-react"
 import Link from "next/link"
 
 export default function MobileAppsPage() {
@@ -224,7 +224,7 @@ export default function MobileAppsPage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Development Process</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              A structured, transparent approach that ensures your mobile app project's success from concept to launch
+              A structured, transparent approach that ensures your mobile app project&apos;s success from concept to launch
             </p>
           </div>
 
@@ -339,7 +339,7 @@ export default function MobileAppsPage() {
         <div className="container mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Build Your Mobile App?</h2>
           <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Let's discuss your mobile app requirements and create a solution that drives engagement and business growth
+            Let&apos;s discuss your mobile app requirements and create a solution that drives engagement and business growth
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="text-lg px-8 bg-white text-emerald-700 hover:bg-gray-100 font-semibold">

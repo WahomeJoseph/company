@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, Code, Cloud, Smartphone, Star, CheckCircle, Users, Target, BarChart, MessageSquare, Clock, Award, ChevronDown, ChevronUp, ExternalLink, MapPin } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { BiSolidQuoteAltLeft } from "react-icons/bi";
@@ -145,8 +146,6 @@ export default function HomePage() {
       icon: Clock
     }
   ]
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const testimonialsPerPage = 3;
 
   const toggleProject = (index: number) => {
     setExpandedProject(expandedProject === index ? null : index);
@@ -226,7 +225,7 @@ export default function HomePage() {
                   className="group hover:shadow-lg transition-all duration-300 border-gray-200 bg-white overflow-hidden"
                 >
                   <div className="h-48 overflow-hidden">
-                    <img
+                    <Image
                       src={service.image || "/placeholder.svg"}
                       alt={service.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -275,7 +274,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Process</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              A structured approach to ensure your project's success from concept to completion
+              A structured approach to ensure your project&apos;s success from concept to completion
             </p>
           </div>
 
@@ -311,7 +310,7 @@ export default function HomePage() {
 
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Here is a selection of some of our successful implementations accross various industries.
-              Our approach is tailored to each client's unique needs, ensuring optimal results and satisfaction.
+              Our approach is tailored to each client&apos;s unique needs, ensuring optimal results and satisfaction.
               {/* Explore some of our successful implementations across various industries */}
             </p>
           </div>
@@ -324,7 +323,7 @@ export default function HomePage() {
               >
                 {/* Image with overlay on hover */}
                 <div className="h-52 overflow-hidden relative">
-                  <img
+                  <Image
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -597,7 +596,7 @@ export default function HomePage() {
         <div className="container mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Transform Your Business?</h2>
           <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Let's discuss how our expertise can help you achieve your technology goals and drive growth.
+            Let&apos;s discuss how our expertise can help you achieve your technology goals and drive growth.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="text-lg px-8 bg-white text-emerald-700 hover:bg-gray-100 font-semibold">

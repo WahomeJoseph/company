@@ -141,7 +141,7 @@ export default function CloudSolutionsPage() {
         <div className="container mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Move to the Cloud?</h2>
           <p className="text-lg text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Let's discuss your cloud strategy and build a scalable infrastructure for your business
+            Let&apos;s discuss your cloud strategy and build a scalable infrastructure for your business
           </p>
           <Button asChild size="lg" className="text-lg px-8 bg-white text-emerald-600 hover:bg-gray-100">
             <Link href="/contact">

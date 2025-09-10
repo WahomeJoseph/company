@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import {
   Check,
   Star,
@@ -14,10 +14,7 @@ import {
   Smartphone,
   Cloud,
   Server,
-  Lock,
   Cpu,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -343,10 +340,8 @@ const services = {
 
 export default function Pricing() {
   const [currency, setCurrency] = useState<"ksh" | "usd">("ksh");
-  const [selectedService, setSelectedService] = useState<keyof typeof services>("web-development");
+  const [selectedService] = useState<keyof typeof services>("web-development");
   const shouldReduceMotion = useReducedMotion();
-
-  const serviceKeys = Object.keys(services);
 
   return (
     <div className="bg-gray-50 relative">

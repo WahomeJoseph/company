@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { Play } from "lucide-react"
 import Image from "next/image"
 
 // Import hero images (replace with your actual image paths)
@@ -51,7 +50,7 @@ const slides = [
 
 export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(true)
+  const [isPlaying] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {

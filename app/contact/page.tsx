@@ -59,7 +59,7 @@ export default function Contact() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     setIsSubmitted(true);
@@ -76,7 +76,7 @@ export default function Contact() {
     }, 3000);
   };
 
-  const handleInputChange = (name, value) => {
+  const handleInputChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -150,7 +150,7 @@ export default function Contact() {
                     Get In Touch <MessageCircle className="text-emerald-500 h-6 w-6" />
                   </CardTitle>
                   <CardDescription className="text-lg text-gray-600">
-                    Fill out the form below and we'll get back to you as soon as possible.
+                    Fill out the form below and we&apos;ll get back to you as soon as possible.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -161,7 +161,7 @@ export default function Contact() {
                         Message Sent!
                       </h3>
                       <p className="text-gray-600">
-                        Thank you for reaching out. We'll get back to you soon.
+                        Thank you for reaching out. We&apos;ll get back to you soon.
                       </p>
                     </div>
                   ) : (
@@ -333,7 +333,7 @@ export default function Contact() {
                           Initial Response
                         </p>
                         <p className="text-sm text-gray-600">
-                          We'll respond to your inquiry within 24 hours
+                          We&apos;ll respond to your inquiry within 24 hours
                         </p>
                       </div>
                     </div>
