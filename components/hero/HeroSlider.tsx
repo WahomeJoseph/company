@@ -1,9 +1,6 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, ArrowRight, Play, Users, Award, MapPin } from "lucide-react"
-import Link from "next/link"
 import Image from "next/image"
 
 // Import hero images (replace with your actual image paths)
@@ -53,7 +50,7 @@ const slides = [
 
 export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(true)
+  const [isPlaying] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
@@ -65,21 +62,10 @@ export default function HeroSlider() {
     
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 7000)
+    }, 10000)
     return () => clearInterval(timer)
   }, [isPlaying, isMounted])
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-  }
-
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying)
-  }
 
   if (!isMounted) {
     return (
@@ -97,33 +83,31 @@ export default function HeroSlider() {
   }
 
   return (
-    <div className="relative w-full h-full md:flex-row rounded-lg overflow-hidden mr-20">
+    <div className="relative w-full h-full md:flex-row overflow-hidden mr-20">
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-all duration-1000 ease-out ${
+          className={`absolute inset-0 transition-all duration-700 ease-in-out ${
             index === currentSlide 
-              ? "opacity-100 scale-100" 
-              : index === (currentSlide - 1 + slides.length) % slides.length
-              ? "opacity-0 scale-110"
-              : "opacity-0 scale-95"
+              ? "opacity-100 z-10" 
+              : "opacity-0 z-0"
           }`}
         >
-          <div className="relative h-full w-full">
+          <div className="relative h-full w-full rounded-2xl overflow-hidden">
             <Image
               src={slide.image}
               alt={slide.title}
               fill
-              className="object-cover transition-transform duration-[7000ms] ease-out"
+              className="object-cover rounded-2xl transition-transform duration-[7000ms] ease-out"
               style={{
                 transform: index === currentSlide ? 'scale(1.05)' : 'scale(1)'
               }}
               priority={index === 0}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 rounded-2xl"></div>
             
             {/* Animated particles overlay */}
-            <div className="absolute inset-0 opacity-30">
+            <div className="absolute inset-0 opacity-30 rounded-2xl">
               <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
               <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-emerald-300 rounded-full animate-bounce delay-300"></div>
               <div className="absolute bottom-1/3 left-1/2 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse delay-700"></div>
@@ -132,7 +116,7 @@ export default function HeroSlider() {
             <div className="relative z-10 flex h-full items-center justify-center px-4">
               <div className="text-center text-white max-w-5xl">
                 <div 
-                  className={`transform transition-all duration-1000 delay-200 ${
+                  className={`transform transition-all duration-700 delay-200 ${
                     index === currentSlide 
                       ? "translate-y-0 opacity-100" 
                       : "translate-y-8 opacity-0"
@@ -144,7 +128,7 @@ export default function HeroSlider() {
                 </div>
                 
                 <div 
-                  className={`transform transition-all duration-1000 delay-400 ${
+                  className={`transform transition-all duration-700 delay-400 ${
                     index === currentSlide 
                       ? "translate-y-0 opacity-100" 
                       : "translate-y-8 opacity-0"
@@ -156,7 +140,7 @@ export default function HeroSlider() {
                 </div>
                 
                 <div 
-                  className={`transform transition-all duration-1000 delay-600 ${
+                  className={`transform transition-all duration-700 delay-600 ${
                     index === currentSlide 
                       ? "translate-y-0 opacity-100" 
                       : "translate-y-8 opacity-0"
@@ -168,7 +152,7 @@ export default function HeroSlider() {
                 </div>
                 
                 <div 
-                  className={`transform transition-all duration-1000 delay-800 ${
+                  className={`transform transition-all duration-700 delay-800 ${
                     index === currentSlide 
                       ? "translate-y-0 opacity-100" 
                       : "translate-y-8 opacity-0"
@@ -178,7 +162,7 @@ export default function HeroSlider() {
 
                 {/* Enhanced Trust Indicators */}
                 <div 
-                  className={`transform transition-all duration-1000 delay-1000 ${
+                  className={`transform transition-all duration-700 delay-1000 ${
                     index === currentSlide 
                       ? "translate-y-0 opacity-100" 
                       : "translate-y-8 opacity-0"
@@ -191,38 +175,8 @@ export default function HeroSlider() {
         </div>
       ))}
 
-      {/* Enhanced Navigation Buttons */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-1 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 z-20 group border border-white/20"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform" />
-      </button>
-      
-      <button
-        onClick={nextSlide}
-        className="absolute right-1 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 z-20 group border border-white/20"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform" />
-      </button>
-
-      {/* Play/Pause Button */}
-      <button
-        onClick={togglePlayPause}
-        className="absolute top-6 right-6 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 z-20 group border border-white/20"
-        aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-      >
-        <Play className={`h-5 w-5 group-hover:scale-110 transition-transform ${!isPlaying ? 'scale-100' : 'scale-0 absolute'}`} />
-        <div className={`w-5 h-5 flex items-center justify-center transition-all ${isPlaying ? 'scale-100' : 'scale-0 absolute'}`}>
-          <div className="w-1 h-3 bg-white rounded-sm mx-0.5"></div>
-          <div className="w-1 h-3 bg-white rounded-sm mx-0.5"></div>
-        </div>
-      </button>
-
       {/* Enhanced Progress Bar */}
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-black/20 z-20 rounded-b-2xl overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-black/20 z-20 overflow-hidden">
         <div
           className="h-full bg-gradient-to-r from-emerald-500 to-emerald-300 transition-all duration-500 ease-out relative"
           style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}

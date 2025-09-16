@@ -64,7 +64,8 @@ export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
@@ -92,7 +93,7 @@ export default function Contact() {
     }
   };
 
-  const handleInputChange = (name, value) => {
+  const handleInputChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -169,9 +170,9 @@ export default function Contact() {
                     Get In Touch{" "}
                     <MessageCircle className="text-emerald-500 h-6 w-6" />
                   </CardTitle>
-                  <CardDescription className="text-lg text-gray-600">
-                    Fill out the form below and we'll get back to you as soon as
+                  <CardDescription className="text-lg text-gray-600">                    Fill out the form below and we'll get back to you as soon as
                     possible.
+
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -183,7 +184,7 @@ export default function Contact() {
                         Message Sent!
                       </h3>
                       <p className="text-gray-600">
-                        Thank you for reaching out. We'll get back to you soon.
+                        Thank you for reaching out. We&apos;ll get back to you soon.
                       </p>
                     </div>
                   ) : (
@@ -429,7 +430,7 @@ export default function Contact() {
                           Initial Response
                         </p>
                         <p className="text-sm text-gray-600">
-                          We'll respond to your inquiry within 24 hours
+                          We&apos;ll respond to your inquiry within 24 hours
                         </p>
                       </div>
                     </div>
@@ -464,60 +465,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Contact Info Cards */}
-      <section className="py-20 bg-gradient-to-br from-white via-emerald-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="text-center h-full shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-emerald-50/50 bg-white/90 backdrop-blur-sm">
-                  <CardContent className="p-8">
-                    <div className="text-emerald-600 mb-4 flex justify-center">
-                      {info.icon}
-                    </div>
-                    <CardTitle className="text-xl mb-2 text-gray-500">
-                      {info.title}
-                    </CardTitle>
-                    <p className="text-emerald-600 font-semibold text-lg mb-2">
-                      {info.content}
-                    </p>
-                    <CardDescription className="text-gray-600">
-                      {info.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-          <div className="mt-20 flex justify-center">
-            <a
-              href="#top"
-              className="flex items-center gap-2 text-emerald-600 hover:text-emerald-800 transition-colors duration-300"
-            >
-              <svg
-                className="w-5 h-5 animate-bounce"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 15l7-7 7 7"
-                />
-              </svg>
-              Back to Top
-            </a>
-          </div>
-        </div>
-      </section>
+   
     </div>
   );
 }

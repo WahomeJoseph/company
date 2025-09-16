@@ -15,17 +15,9 @@ import {
   Globe,
   Smartphone,
   Cloud,
-  Shield,
   Network,
-  Brain,
   MessageSquare,
 } from 'lucide-react';
-
-interface NavItem {
-  name: string;
-  href: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-}
 
 interface Service {
   name: string;
@@ -37,7 +29,6 @@ const navItems = [
   { name: 'About', href: '/about' },
   { name: 'Portfolio', href: '/portfolio' },
   { name: 'Blogs', href: '/blog' },
-  { name: 'Careers', href: '/careers' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'Contact', href: '/contact' },
 ]

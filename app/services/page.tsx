@@ -18,15 +18,9 @@ import {
   ChevronRight,
   Home,
   Star,
-  Users,
-  CheckCircle,
-  Clock,
-  MessageSquare,
-  Play,
   Target,
   BarChart3,
   Lightbulb,
-  Zap,
 } from "lucide-react"
 
 export default function ServicesPage() {
@@ -323,7 +317,7 @@ export default function ServicesPage() {
               How We Deliver <span className="text-emerald-600">Excellence</span>
             </h2>
             <p className="text-lg text-slate-600 max-w-3xl mx-auto text-pretty">
-              A structured approach to ensure your project's success from concept to completion
+              A structured approach to ensure your project&apos;s success from concept to completion
             </p>
           </div>
 
@@ -356,11 +350,11 @@ export default function ServicesPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 to-emerald-700/20"></div>
             <div className="relative z-10">
               <Badge className="mb-4 bg-white/20 text-white backdrop-blur-sm border-0 px-4 py-1.5">
-                Let's Get Started
+                Let&apos;s Get Started
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">Ready to Transform Your Business?</h2>
               <p className="text-lg text-slate-200 mb-8 text-pretty max-w-2xl mx-auto">
-                Let's discuss how our services can help you achieve your technology goals and drive growth.
+                Let&apos;s discuss how our services can help you achieve your technology goals and drive growth.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="bg-emerald-600 text-white hover:bg-emerald-700 font-semibold">
