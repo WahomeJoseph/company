@@ -56,7 +56,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    company: "",
+    phone: "",
     service: "",
     budget: "",
     message: "",
@@ -65,33 +65,36 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const docRef = await addDoc(collection(db, "contacts"), {
-        ...formData,
-        timestamp: Timestamp.now(),
+const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    const docRef = await addDoc(collection(db, "contacts"), {
+      ...formData,
+      timestamp: Timestamp.now(),
+    });
+    console.log("Document written with ID: ", docRef.id);
+    setIsSubmitted(true);
+
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        budget: "",
+        message: "",
       });
-      console.log("Document written with ID: ", docRef.id);
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({
-          name: "",
-          email: "",
-          company: "",
-          service: "",
-          budget: "",
-          message: "",
-        });
-        setIsSubmitting(false);
-      }, 5000);
-    } catch (error) {
-      console.error("Error adding document: ", error);
       setIsSubmitting(false);
-    }
-  };
+    }, 5000);
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    setIsSubmitting(false);
+  }
+};
+
 
   const handleInputChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -233,10 +236,10 @@ export default function Contact() {
                       {/* Company Name */}
                       <div className="relative">
                         <Input
-                          id="company"
-                          value={formData.company}
+                          id="phone"
+                          value={formData.phone}
                           onChange={(e) =>
-                            handleInputChange("company", e.target.value)
+                            handleInputChange("phone", e.target.value)
                           }
                           className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500 w-full h-12 pt-4 pb-1 text-black"
                         />
@@ -244,7 +247,7 @@ export default function Contact() {
                           htmlFor="company"
                           className="absolute left-3 top-2 text-sm text-gray-500 transition-all peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-600 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500"
                         >
-                          Company Name
+                          Enter Phone Number
                         </label>
                       </div>
 
