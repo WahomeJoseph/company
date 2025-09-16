@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useState } from "react";
 import {
@@ -26,6 +27,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
+import Confetti from "react-confetti";
+import { db } from "@/lib/Firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 const contactInfo = [
   {
@@ -58,22 +62,35 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        service: "",
-        budget: "",
-        message: "",
+    setIsSubmitting(true);
+    try {
+      const docRef = await addDoc(collection(db, "contacts"), {
+        ...formData,
+        timestamp: Timestamp.now(),
       });
-    }, 3000);
+      console.log("Document written with ID: ", docRef.id);
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          service: "",
+          budget: "",
+          message: "",
+        });
+        setIsSubmitting(false);
+      }, 5000);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (name: string, value: string) => {
@@ -82,7 +99,7 @@ export default function Contact() {
 
   return (
     <div className="bg-gray-50">
-      {/* Hero Section (unchanged) */}
+      {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-emerald-100 via-white to-emerald-200 py-40 sm:py-48">
         <div className="absolute inset-0 -z-10 pointer-events-none">
           <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-emerald-400 opacity-30 rounded-full blur-[120px] animate-pulse" />
@@ -111,7 +128,10 @@ export default function Contact() {
             transition={{ delay: 1.2, duration: 0.8 }}
             className="mt-6 text-lg sm:text-xl text-emerald-800 max-w-3xl mx-auto"
           >
-            At Tech Solutions, we specialize in building robust, scalable, and visually stunning digital products. Whether you’re a startup or an enterprise, we turn your ideas into real-world impact through cutting-edge technology and strategic design.
+            At Tech Solutions, we specialize in building robust, scalable, and
+            visually stunning digital products. Whether you’re a startup or an
+            enterprise, we turn your ideas into real-world impact through
+            cutting-edge technology and strategic design.
           </motion.p>
         </div>
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -133,7 +153,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Contact Form & Map Section (styled background and components) */}
+      {/* Contact Form & Map Section */}
       <section className="py-20 bg-gradient-to-br from-emerald-50 via-white to-emerald-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -144,18 +164,21 @@ export default function Contact() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <Card className="shadow-xl border-0 bg-white/90 backdrop-blur-sm">
+              <Card className="shadow-xl border-0 bg-white/90 backdrop-blur-md">
                 <CardHeader>
                   <CardTitle className="text-3xl text-gray-600 flex items-center gap-2">
-                    Get In Touch <MessageCircle className="text-emerald-500 h-6 w-6" />
+                    Get In Touch{" "}
+                    <MessageCircle className="text-emerald-500 h-6 w-6" />
                   </CardTitle>
-                  <CardDescription className="text-lg text-gray-600">
-                    Fill out the form below and we&apos;ll get back to you as soon as possible.
+                  <CardDescription className="text-lg text-gray-600">                    Fill out the form below and we'll get back to you as soon as
+                    possible.
+
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {isSubmitted ? (
                     <div className="text-center py-12">
+                      <Confetti />
                       <CheckCircle className="h-16 w-16 text-emerald-600 mx-auto mb-4" />
                       <h3 className="text-2xl font-bold text-gray-900 mb-2">
                         Message Sent!
@@ -167,70 +190,97 @@ export default function Contact() {
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <label
-                            htmlFor="name"
-                            className="block text-sm font-medium text-gray-700 mb-2"
-                          >
-                            Full Name *
-                          </label>
+                        {/* Full Name */}
+                        <div className="relative">
                           <Input
                             id="name"
                             value={formData.name}
-                            onChange={(e) => handleInputChange("name", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("name", e.target.value)
+                            }
                             required
-                            className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500"
+                            className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500 w-full h-12 pt-4 pb-1 text-black"
                           />
-                        </div>
-                        <div>
                           <label
-                            htmlFor="email"
-                            className="block text-sm font-medium text-gray-700 mb-2"
+                            htmlFor="name"
+                            className="absolute left-3 top-2 text-sm text-gray-500 transition-all peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-600 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500"
                           >
-                            Email Address *
+                            Full Name *
                           </label>
+                        </div>
+
+                        {/* Email */}
+                        <div className="relative">
                           <Input
                             id="email"
                             type="email"
                             value={formData.email}
-                            onChange={(e) => handleInputChange("email", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("email", e.target.value)
+                            }
                             required
-                            className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500"
+                            className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500 w-full h-12 pt-4 pb-1 text-black"
                           />
+                          <label
+                            htmlFor="email"
+                            className="absolute left-3 top-2 text-sm text-gray-500 transition-all peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-600 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500"
+                          >
+                            Email Address *
+                          </label>
                         </div>
                       </div>
-                      <div>
-                        <label
-                          htmlFor="company"
-                          className="block text-sm font-medium text-gray-700 mb-2"
-                        >
-                          Company Name
-                        </label>
+
+                      {/* Company Name */}
+                      <div className="relative">
                         <Input
                           id="company"
                           value={formData.company}
-                          onChange={(e) => handleInputChange("company", e.target.value)}
-                          className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500"
+                          onChange={(e) =>
+                            handleInputChange("company", e.target.value)
+                          }
+                          className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500 w-full h-12 pt-4 pb-1 text-black"
                         />
+                        <label
+                          htmlFor="company"
+                          className="absolute left-3 top-2 text-sm text-gray-500 transition-all peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-600 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500"
+                        >
+                          Company Name
+                        </label>
                       </div>
+
+                      {/* Service and Budget */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label
                             htmlFor="service"
-                            className="block text-sm font-medium text-gray-700 mb-2"
+                            className="block text-sm font-medium text-gray-700 mb-2 text-black"
                           >
                             Service Needed *
                           </label>
-                          <Select onValueChange={(value) => handleInputChange("service", value)}>
-                            <SelectTrigger className="focus:ring-emerald-500 focus:border-emerald-500">
+                          <Select
+                            onValueChange={(value) =>
+                              handleInputChange("service", value)
+                            }
+                          >
+                            <SelectTrigger className="focus:ring-emerald-500 focus:border-emerald-500 w-full h-12 text-black">
                               <SelectValue placeholder="Select a service" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="web-development">Web Development</SelectItem>
-                              <SelectItem value="mobile-development">Mobile Development</SelectItem>
-                              <SelectItem value="cloud-solutions">Cloud Solutions</SelectItem>
-                              <SelectItem value="it-consulting">IT Consulting</SelectItem>
-                              <SelectItem value="system-integration">System Integration</SelectItem>
+                              <SelectItem value="web-development">
+                                Web Development
+                              </SelectItem>
+                              <SelectItem value="mobile-development">
+                                Mobile Development
+                              </SelectItem>
+                              <SelectItem value="cloud-solutions">
+                                Cloud Solutions
+                              </SelectItem>
+                              <SelectItem value="it-consulting">
+                                IT Consulting
+                              </SelectItem>
+                              <SelectItem value="system-integration">
+                                System Integration
+                              </SelectItem>
                               <SelectItem value="other">Other</SelectItem>
                             </SelectContent>
                           </Select>
@@ -242,43 +292,90 @@ export default function Contact() {
                           >
                             Project Budget
                           </label>
-                          <Select onValueChange={(value) => handleInputChange("budget", value)}>
-                            <SelectTrigger className="focus:ring-emerald-500 focus:border-emerald-500">
+                          <Select
+                            onValueChange={(value) =>
+                              handleInputChange("budget", value)
+                            }
+                          >
+                            <SelectTrigger className="focus:ring-emerald-500 focus:border-emerald-500 w-full h-12 text-black">
                               <SelectValue placeholder="Select budget range" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="under-10k">Under Ksh 10,000</SelectItem>
-                              <SelectItem value="10k-20k">Ksh 10,000 - Ksh 20,000</SelectItem>
-                              <SelectItem value="20k-50k">Ksh 20,000 - Ksh 50,000</SelectItem>
-                              <SelectItem value="50k-plus">Ksh 50,000+</SelectItem>
+                              <SelectItem value="under-10k">
+                                Under Ksh 10,000
+                              </SelectItem>
+                              <SelectItem value="10k-20k">
+                                Ksh 10,000 - Ksh 20,000
+                              </SelectItem>
+                              <SelectItem value="20k-50k">
+                                Ksh 20,000 - Ksh 50,000
+                              </SelectItem>
+                              <SelectItem value="50k-plus">
+                                Ksh 50,000+
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
                       </div>
-                      <div>
-                        <label
-                          htmlFor="message"
-                          className="block text-sm font-medium text-gray-700 mb-2"
-                        >
-                          Project Details *
-                        </label>
+
+                      {/* Project Details */}
+                      <div className="relative">
                         <Textarea
                           id="message"
                           rows={5}
                           value={formData.message}
-                          onChange={(e) => handleInputChange("message", e.target.value)}
+                          onChange={(e) =>
+                            handleInputChange("message", e.target.value)
+                          }
                           required
-                          className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500"
-                          placeholder="Tell us more about your project, timeline, and any specific requirements..."
+                          className="rounded-md border border-gray-300 focus:ring-2 focus:ring-emerald-500 w-full pt-4 pb-1"
                         />
+                        <label
+                          htmlFor="message"
+                          className="absolute left-3 top-2 text-sm text-gray-500 transition-all peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-600 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500"
+                        >
+                          Project Details *
+                        </label>
                       </div>
+
+                      {/* Submit Button */}
+
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 hover:scale-105 transition-transform duration-300 shadow-lg"
+                        disabled={isSubmitting}
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 hover:scale-105 transition-transform duration-300 shadow-lg flex items-center justify-center"
                       >
-                        <Send className="h-5 w-5 mr-2" />
-                        Send Message
+                        {isSubmitting ? (
+                          <>
+                            <svg
+                              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="h-5 w-5 mr-2" />
+                            Send Message
+                          </>
+                        )}
                       </Button>
                     </form>
                   )}
@@ -355,7 +452,8 @@ export default function Contact() {
                           Project Proposal
                         </p>
                         <p className="text-sm text-gray-600">
-                          Detailed proposal with timeline and pricing within 3-5 days
+                          Detailed proposal with timeline and pricing within 3-5
+                          days
                         </p>
                       </div>
                     </div>
@@ -367,60 +465,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Contact Info Cards (styled background and components) */}
-      <section className="py-20 bg-gradient-to-br from-white via-emerald-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="text-center h-full shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-emerald-50/50 bg-white/90 backdrop-blur-sm">
-                  <CardContent className="p-8">
-                    <div className="text-emerald-600 mb-4 flex justify-center">
-                      {info.icon}
-                    </div>
-                    <CardTitle className="text-xl mb-2 text-gray-500">
-                      {info.title}
-                    </CardTitle>
-                    <p className="text-emerald-600 font-semibold text-lg mb-2">
-                      {info.content}
-                    </p>
-                    <CardDescription className="text-gray-600">
-                      {info.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-          <div className="mt-20 flex justify-center">
-            <a
-              href="#top"
-              className="flex items-center gap-2 text-emerald-600 hover:text-emerald-800 transition-colors duration-300"
-            >
-              <svg
-                className="w-5 h-5 animate-bounce"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 15l7-7 7 7"
-                />
-              </svg>
-              Back to Top
-            </a>
-          </div>
-        </div>
-      </section>
+   
     </div>
   );
 }
